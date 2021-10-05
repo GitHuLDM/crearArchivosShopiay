@@ -2,7 +2,6 @@ from os import listdir
 from os.path import isfile, isdir
 import xlrd
 # Para poder funcionar la libreria de excel este deve estar en a vercion pip install xlrd==1.2.0 pero no se recomienda ya que este es insegura para servidores.
-print("Carlos")
 
 productos = "productos.xlsx"
 openProductos = xlrd.open_workbook(productos)
@@ -22,6 +21,7 @@ for ip in range(Productos.nrows):
         taCampo = ""
         trueCapo = ""
         imgenCampo = ""
+        contadorImagenesCampo = ""
         
         if Productos.cell_value(ip,0) != "":
             helder = Productos.cell_value(ip,0).replace(" ", "_")
@@ -35,7 +35,8 @@ for ip in range(Productos.nrows):
             imgenCampo = f'{url}{Productos.cell_value(ip,14)}'
             contadorImagenesCampo = contadorImagenes
 
-        with open('productos.csv','a') as file_escritura:
-            file_escritura.write(f'{helder},{Productos.cell_value(ip,0)},"{Productos.cell_value(ip,1)}",{vendedorCampo},"{tiposCAmpo}","{taCampo}",{trueCapo},{Produpuctos.cell_value(ip,4)},{Productos.cell_value(ip,5)},{Productos.cell_value(ip,6)},{Productos.cell_value(ip,7)},{Productos.cell_value(ip,8)},{Productos.cell_value(ip,9)},{str(Productos.cell_value(ip,10))},{Productos.cell_value(ip,11)},shopify,{Productos.cell_value(ip,12)},deny,manual,{Productos.cell_value(ip,13)},,true,true,,{imgenCampo},{contadorImagenesCampo},,false,,"",,,,,,,,,,,,,,{imgenCampo},kg,,,active\r')
-
-
+        with open('productos.csv','a', encoding="utf-8") as file_escritura:
+            if  Productos.cell_value(ip,5) != "":
+                file_escritura.write(f'{helder},{Productos.cell_value(ip,0)},"{Productos.cell_value(ip,1).capitalize()}",{vendedorCampo},"{tiposCAmpo}","{taCampo}",{trueCapo},{Productos.cell_value(ip,4)},{Productos.cell_value(ip,5)},{Productos.cell_value(ip,6)},{Productos.cell_value(ip,7)},{Productos.cell_value(ip,8)},{Productos.cell_value(ip,9)},{str(Productos.cell_value(ip,10))},{Productos.cell_value(ip,11)},shopify,{Productos.cell_value(ip,12)},deny,manual,{Productos.cell_value(ip,13)},,true,true,,{imgenCampo},{contadorImagenesCampo},,false,,"",,,,,,,,,,,,,,{imgenCampo},kg,,,active\r')
+            else:
+                file_escritura.write(f'{helder},,,,,,,,,,,,,,,,,,,,,,,,{imgenCampo},{contadorImagenesCampo},,,,,,,,,,,,,,,,,,,,,,\r')
